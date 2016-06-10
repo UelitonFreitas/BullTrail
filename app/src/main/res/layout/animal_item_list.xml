@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_vertical"
+    android:paddingTop="8dp"
+    android:layout_marginLeft="16dp">
+
+    <ImageView
+        android:id="@+id/image_view_pasture_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_cow_white_48dp"
+        android:tint="@color/colorAccent"/>
+
+    <RelativeLayout
+        android:id="@+id/relative_layout_informative_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/left_margin_item_list">
+
+        <TextView
+            android:id="@+id/text_view_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            tools:text="Vaca Chucra"/>
+
+        <TextView
+            android:id="@+id/text_view_age"
+            android:layout_below="@+id/text_view_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="13 anos"/>
+
+        <TextView
+            android:id="@+id/text_view_last_weight"
+            android:layout_below="@+id/text_view_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="115 kg"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/dividerColor"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>

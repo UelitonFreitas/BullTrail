@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">BullTrail</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_model">ModelActivity</string>
+    <string name="name">Nome</string>
+    <string name="register">Registro</string>
+    <string name="birthDate">Data de Nascimento</string>
+    <string name="race">Raça</string>
+    <string name="coat">Pelagem</string>
+    <string name="fatherName">Nome do Pai</string>
+    <string name="motherName">Nome da Mãe</string>
+    <string name="ethnicity">Etinia</string>
+    <string name="weight">Peso</string>
+</resources>
