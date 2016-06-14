@@ -17,19 +17,12 @@ public class AnimalRepositoryImpl implements AnimalRepository {
     }
 
     @Override
-    public boolean saveAnimal(Animal animal) {
-        return false;
+    public void saveAnimal(Animal animal) {
     }
 
-//    @Override
-//    public List<Animal> findAll() {
-////        return Animal.findAll();
-//        return null;
-//    }
-//
-//    @Override
-//    public Animal findById(long animalId) {
-////        return Animal.findById(animalId);
-//        return null;
-//    }
+    @Override
+    public void refreshData() {
+
+    }
+
 }

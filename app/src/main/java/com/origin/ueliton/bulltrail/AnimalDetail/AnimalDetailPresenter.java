@@ -24,7 +24,9 @@ public class AnimalDetailPresenter implements AnimalDetailContract.UserActionsLi
     private final AnimalRepository mAnimalDetailRepository;
     private ImageFile mImageFile;
 
-    public AnimalDetailPresenter(@NonNull AnimalRepository animalDetailRepository, @NonNull AnimalDetailContract.View animalDetailView, ImageFile imageFile) {
+    public AnimalDetailPresenter(@NonNull AnimalRepository animalDetailRepository,
+                                 @NonNull AnimalDetailContract.View animalDetailView,
+                                 ImageFile imageFile) {
         mAnimalDetailRepository = checkNotNull(animalDetailRepository, "animalDetailRepository cannot be null!");
         mAnimalDetailView = checkNotNull(animalDetailView, "animalDetailView cannot be null!");
         mImageFile = checkNotNull(imageFile, "imageFile cannot be null");

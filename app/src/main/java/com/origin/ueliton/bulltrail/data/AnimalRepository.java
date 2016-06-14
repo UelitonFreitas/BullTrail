@@ -11,7 +11,8 @@ public interface AnimalRepository {
 
     void getAnimals(LoadAnimalsCallBack loadAnimalsCallBack);
     void getAnimal(Long animalId, LoadAnimalCallBack caploadAnimalCallBackture);
-    boolean saveAnimal(Animal animal);
+    void saveAnimal(Animal animal);
+    void refreshData();
 
     interface LoadAnimalsCallBack {
         void onAnimalsLoaded(List<Animal> animals);

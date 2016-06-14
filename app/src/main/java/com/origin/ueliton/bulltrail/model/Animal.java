@@ -1,20 +1,12 @@
 package com.origin.ueliton.bulltrail.model;
 
-import com.origin.ueliton.bulltrail.emptyObject.EmptyAnimal;
-import com.origin.ueliton.bulltrail.migrations.AnimalMigration;
+import android.support.annotation.Nullable;
+
+import com.google.common.base.Objects;
 import com.origin.ueliton.bulltrail.util.StringUtil;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
-
-import se.emilsjolander.sprinkles.Model;
-import se.emilsjolander.sprinkles.Query;
-import se.emilsjolander.sprinkles.annotations.AutoIncrement;
-import se.emilsjolander.sprinkles.annotations.Column;
-import se.emilsjolander.sprinkles.annotations.Key;
-import se.emilsjolander.sprinkles.annotations.Table;
+import java.util.UUID;
 
 /**
  * Created by ueliton on 02/04/16.
@@ -26,25 +18,49 @@ public class Animal{
 
     public String registerNumber;
 
+    @Nullable
     public String name;
 
+    @Nullable
     public Date birthDate;
 
+    @Nullable
     public String race;
 
+    @Nullable
     public String coat;
 
+    @Nullable
     public String father;
 
+    @Nullable
     public String mother;
 
+    @Nullable
     public String ethnicity;
 
+    @Nullable
     public Integer weight;
+
+    @Nullable
     private String imagePath;
+
+    @Nullable
     private Integer age;
 
-    public Animal(String name, String registerNumber, Date birthDate, String race, String coat, String father, String mother, String ethnicity, Integer weight, Integer age, String imagePath) {
+    public Animal(@Nullable  String name,
+                  String registerNumber,
+                  @Nullable Date birthDate,
+                  @Nullable String race,
+                  @Nullable String coat,
+                  @Nullable String father,
+                  @Nullable String mother,
+                  @Nullable String ethnicity,
+                  @Nullable Integer weight,
+                  @Nullable Integer age,
+                  @Nullable String imagePath) {
+
+        this.id = Long.valueOf(UUID.randomUUID().toString());
         this.name = name;
         this.registerNumber = registerNumber;
         this.birthDate = birthDate;
@@ -57,31 +73,6 @@ public class Animal{
         this.age = age;
         this.imagePath = imagePath;
     }
-
-    //    public static List<Animal> findAll() {
-//
-//        String query = "SELECT * FROM " + AnimalMigration.Attribute.TABLE_NAME;
-//
-//        List<Animal> animals = Query.many(Animal.class, query).get().asList();
-//
-//        if (animals == null)
-//            return Collections.emptyList();
-//
-//        return animals;
-//    }
-//
-//    public static Animal findById(long animalId) {
-//
-//        String query = "SELECT * FROM " + AnimalMigration.Attribute.TABLE_NAME +
-//                "WHERE " + AnimalMigration.Attribute.ID + " = " + animalId;
-//
-//        return getOne(query);
-//    }
-//
-//    private static Animal getOne(String query) {
-//        Animal animal = Query.one(Animal.class, query).get();
-//        return animal == null ? new EmptyAnimal() : animal;
-//    }
 
     public Long getId() {
         return id;
@@ -173,5 +164,46 @@ public class Animal{
 
     public boolean isEmpty() {
         return StringUtil.isEmpty(registerNumber);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Animal animal = (Animal) o;
+
+        if (id != null ? !id.equals(animal.id) : animal.id != null) return false;
+        if (registerNumber != null ? !registerNumber.equals(animal.registerNumber) : animal.registerNumber != null)
+            return false;
+        if (name != null ? !name.equals(animal.name) : animal.name != null) return false;
+        if (birthDate != null ? !birthDate.equals(animal.birthDate) : animal.birthDate != null)
+            return false;
+        if (race != null ? !race.equals(animal.race) : animal.race != null) return false;
+        if (coat != null ? !coat.equals(animal.coat) : animal.coat != null) return false;
+        if (father != null ? !father.equals(animal.father) : animal.father != null) return false;
+        if (mother != null ? !mother.equals(animal.mother) : animal.mother != null) return false;
+        if (ethnicity != null ? !ethnicity.equals(animal.ethnicity) : animal.ethnicity != null)
+            return false;
+        if (weight != null ? !weight.equals(animal.weight) : animal.weight != null) return false;
+        if (imagePath != null ? !imagePath.equals(animal.imagePath) : animal.imagePath != null)
+            return false;
+        return age != null ? age.equals(animal.age) : animal.age == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id,
+                registerNumber,
+                name,
+                race,
+                coat,
+                father,
+                mother,
+                ethnicity,
+                weight,
+                imagePath,
+                age);
     }
 }

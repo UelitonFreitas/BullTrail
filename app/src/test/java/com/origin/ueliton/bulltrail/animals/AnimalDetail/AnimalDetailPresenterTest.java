@@ -86,56 +86,6 @@ public class AnimalDetailPresenterTest {
         verify(mAnimalDetailView).showAnimalImage(ANIMAL_IMAGE_TEST);
     }
 
-    @Test
-    public void saveAnimal_showSuccessOnUI(){
-
-        //When the presenter is asked to save a animal
-        mAnimalDetailPresenter.saveAnimal(ANIMAL_NAME_TEST,
-                ANIMAL_REGISTER_NUMBER_TEST,
-                ANIMAL_BIRTH_DATE_TEST,
-                ANIMAL_RACE_TEST,
-                ANIMAL_COAT_NAME_TEST,
-                ANIMAL_FATHER_NAME_TEST,
-                ANIMAL_MOTHER_NAME,
-                ANIMAL_ETHINICITY_TEST,
-                ANIMAL_WEIGHT_TEST,
-                ANIMAL_AGE_TEST,
-                ANIMAL_IMAGE_TEST);
-
-        //Then the animals,
-        verify(animalRepository).saveAnimal(any(Animal.class)); // is save on repository
-        verify(mAnimalDetailView).showAnimalsList(); // show animal list
-    }
-
-    @Test
-    public void saveAnimalWithoutRegisterNumber_emptyAnimalShowUiError(){
-
-        //When the presenter is asked to save a animal without register number
-        mAnimalDetailPresenter.saveAnimal(ANIMAL_NAME_TEST,
-                "",
-                ANIMAL_BIRTH_DATE_TEST,
-                ANIMAL_RACE_TEST,
-                ANIMAL_COAT_NAME_TEST,
-                ANIMAL_FATHER_NAME_TEST,
-                ANIMAL_MOTHER_NAME,
-                ANIMAL_ETHINICITY_TEST,
-                ANIMAL_WEIGHT_TEST,
-                ANIMAL_AGE_TEST,
-                ANIMAL_IMAGE_TEST);
-
-        //Then show animal empty error message.
-        verify(mAnimalDetailView).showEmptyAnimalMessage();
-    }
-
-    @Test
-    public void takePicture_createFileAndOpenCamera() throws IOException {
-
-        mAnimalDetailPresenter.takePicture();
-
-        verify(mImageFile).create(anyString(), anyString());
-        verify(mImageFile).getPath();
-        verify(mAnimalDetailView).openCamera(anyString());
-    }
 
     @Test
     public void loadInvalidAnimalFromRepository_ShowIntoView(){
