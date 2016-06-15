@@ -13,14 +13,13 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.io.IOException;
 import java.util.Date;
 
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by ueliton on 5/21/16.
@@ -45,7 +44,7 @@ public class AnimalDetailPresenterTest {
     private AnimalDetailContract.View mAnimalDetailView;
 
     @Mock
-    private AnimalRepository animalRepository;
+    private AnimalRepository mAnimalRepository;
 
     @Captor
     private ArgumentCaptor<AnimalRepository.LoadAnimalCallBack> mLoadAnimalCallBackCaptor;
@@ -58,7 +57,7 @@ public class AnimalDetailPresenterTest {
 
         MockitoAnnotations.initMocks(this);
 
-        mAnimalDetailPresenter = new AnimalDetailPresenter(animalRepository, mAnimalDetailView, mImageFile);
+        mAnimalDetailPresenter = new AnimalDetailPresenter(mAnimalRepository, mAnimalDetailView, mImageFile);
     }
 
     @Test
@@ -68,7 +67,7 @@ public class AnimalDetailPresenterTest {
 
         mAnimalDetailPresenter.loadAnimal(animal.getId());
 
-        verify(animalRepository).getAnimal(eq(animal.getId()), mLoadAnimalCallBackCaptor.capture());
+        verify(mAnimalRepository).getAnimal(eq(animal.getId()), mLoadAnimalCallBackCaptor.capture());
         mLoadAnimalCallBackCaptor.getValue().onAnimalLoaded(animal);
 
         verify(mAnimalDetailView).setProgressIndicator(false);
@@ -89,6 +88,41 @@ public class AnimalDetailPresenterTest {
 
     @Test
     public void loadInvalidAnimalFromRepository_ShowIntoView(){
-        fail("should show a empty view for a invalid animal loaded");
+
+        mAnimalDetailPresenter.loadAnimal(any(Long.class));
+
+        verify(mAnimalDetailView).setProgressIndicator(true);
+
+        verify(mAnimalRepository).getAnimal(any(Long.class), mLoadAnimalCallBackCaptor.capture());
+        mLoadAnimalCallBackCaptor.getValue().onAnimalLoaded(null);
+
+        verify(mAnimalDetailView).setProgressIndicator(false);
+
+        verify(mAnimalDetailView).showAnimalNotFoundView();
+    }
+
+    @Test
+    public void saveAnimal_showSuccessOnUi(){
+
+        Animal animal = new Animal(ANIMAL_NAME_TEST, ANIMAL_REGISTER_NUMBER_TEST, ANIMAL_BIRTH_DATE_TEST, ANIMAL_RACE_TEST, ANIMAL_COAT_NAME_TEST, ANIMAL_FATHER_NAME_TEST, ANIMAL_MOTHER_NAME, ANIMAL_ETHINICITY_TEST, ANIMAL_WEIGHT_TEST,ANIMAL_AGE_TEST, ANIMAL_IMAGE_TEST);
+
+        when(mAnimalDetailView.getAnimal()).thenReturn((animal));
+        Animal animalToSave = mAnimalDetailView.getAnimal();
+
+        mAnimalDetailPresenter.saveAnimal(animalToSave);
+
+        verify(mAnimalRepository).saveAnimal(any(Animal.class));
+        verify(mAnimalDetailView).showAnimalsList();
+    }
+
+    @Test
+    public void saveInvalidAnimal_showInvalidAnimalMessage(){
+
+        when(mAnimalDetailView.getAnimal()).thenReturn(new Animal());
+        Animal animalToBeSaved = mAnimalDetailView.getAnimal();
+
+        mAnimalDetailPresenter.saveAnimal(animalToBeSaved);
+
+        verify(mAnimalDetailView).showInvalidAnimalMessage();
     }
 }

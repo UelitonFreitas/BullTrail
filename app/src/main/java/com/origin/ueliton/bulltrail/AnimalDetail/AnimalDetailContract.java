@@ -45,24 +45,16 @@ public interface AnimalDetailContract {
         void showEmptyAnimalMessage();
 
         void openCamera(String imagePath);
+
+        Animal getAnimal();
+
+        void showInvalidAnimalMessage();
     }
 
     interface UserActionsListener{
 
         void loadAnimal(Long id);
 
-        void saveAnimal(String animalName,
-                        String animalRegisterNumber,
-                        Date animalBirthDate,
-                        String animalRace,
-                        String animalCoatName,
-                        String animalFatherName,
-                        String animalMotherName,
-                        String animalEthinicity,
-                        Integer animalWeight,
-                        Integer animalAge,
-                        String animalImage);
-
-        void takePicture() throws IOException;
+        void saveAnimal(Animal animal);
     }
 }

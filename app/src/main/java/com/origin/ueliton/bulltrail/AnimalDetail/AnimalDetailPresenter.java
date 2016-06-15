@@ -4,13 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.origin.ueliton.bulltrail.data.AnimalRepository;
 import com.origin.ueliton.bulltrail.model.Animal;
-import com.origin.ueliton.bulltrail.util.DateUtil;
 import com.origin.ueliton.bulltrail.util.ImageFile;
 import com.origin.ueliton.bulltrail.util.StringUtil;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -52,50 +47,16 @@ public class AnimalDetailPresenter implements AnimalDetailContract.UserActionsLi
     }
 
     @Override
-    public void saveAnimal(String animalName,
-                           String animalRegisterNumber,
-                           Date animalBirthDate,
-                           String animalRace,
-                           String animalCoatName,
-                           String animalFatherName,
-                           String animalMotherName,
-                           String animalEthinicity,
-                           Integer animalWeight,
-                           Integer animalAge,
-                           String animalImage) {
+    public void saveAnimal(Animal animal) {
 
-        Animal animal = new Animal(animalName,
-                animalRegisterNumber,
-                animalBirthDate,
-                animalRace,
-                animalCoatName,
-                animalFatherName,
-                animalMotherName,
-                animalEthinicity,
-                animalWeight,
-                animalAge,
-                animalImage);
-
-        if(animal.isEmpty()){
-            mAnimalDetailView.showEmptyAnimalMessage();
+        if(!animal.isValid()){
+            mAnimalDetailView.showInvalidAnimalMessage();
         }
         else {
             mAnimalDetailRepository.saveAnimal(animal);
             mAnimalDetailView.showAnimalsList();
         }
-
     }
-
-    @Override
-    public void takePicture() throws IOException {
-
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        mImageFile.create(imageFileName, ".jpg");
-        String imagePath = mImageFile.getPath();
-        mAnimalDetailView.openCamera(imagePath);
-    }
-
 
     private void showAnimal(Animal animal) {
 

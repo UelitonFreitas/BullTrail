@@ -1,7 +1,7 @@
-package com.origin.ueliton.bulltrail.animals.addAnimal;
+package com.origin.ueliton.bulltrail.animals.AddAnimal;
 
-import com.origin.ueliton.bulltrail.AnimalDetail.AnimalDetailContract;
-import com.origin.ueliton.bulltrail.AnimalDetail.AnimalDetailPresenter;
+import com.origin.ueliton.bulltrail.AddAnimal.AddAnimalContract;
+import com.origin.ueliton.bulltrail.AddAnimal.AddAnimalPresenter;
 import com.origin.ueliton.bulltrail.data.AnimalRepository;
 import com.origin.ueliton.bulltrail.model.Animal;
 import com.origin.ueliton.bulltrail.util.ImageFile;
@@ -19,6 +19,7 @@ import java.util.Date;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by ueliton on 6/1/16.
@@ -32,15 +33,15 @@ public class AddAnimalPresenterTest {
     private static final String ANIMAL_COAT_NAME_TEST = "escura";
     private static final String ANIMAL_FATHER_NAME_TEST = "Lobo";
     private static final String ANIMAL_MOTHER_NAME = "Loba";
-    private static final String ANIMAL_ETHINICITY_TEST = "Albino";
+    private static final String ANIMAL_ETHNICITY_TEST = "Albino";
     private static final Integer ANIMAL_WEIGHT_TEST = 4547;
     private static final String ANIMAL_IMAGE_TEST = "path_to_a_image";
     private static final Integer ANIMAL_AGE_TEST = 2;
 
-    private AnimalDetailPresenter mAnimalDetailPresenter;
+    private AddAnimalPresenter mAddAnimalPresenter;
 
     @Mock
-    private AnimalDetailContract.View mAnimalDetailView;
+    private AddAnimalContract.View mAddAnimalView;
 
     @Mock
     private AnimalRepository animalRepository;
@@ -56,58 +57,73 @@ public class AddAnimalPresenterTest {
 
         MockitoAnnotations.initMocks(this);
 
-        mAnimalDetailPresenter = new AnimalDetailPresenter(animalRepository, mAnimalDetailView, mImageFile);
+        mAddAnimalPresenter = new AddAnimalPresenter(animalRepository, mAddAnimalView, mImageFile);
     }
 
     @Test
     public void saveAnimal_showSuccessOnUI(){
 
         //When the presenter is asked to save a animal
-        mAnimalDetailPresenter.saveAnimal(ANIMAL_NAME_TEST,
+        mAddAnimalPresenter.saveAnimal(ANIMAL_NAME_TEST,
                 ANIMAL_REGISTER_NUMBER_TEST,
                 ANIMAL_BIRTH_DATE_TEST,
                 ANIMAL_RACE_TEST,
                 ANIMAL_COAT_NAME_TEST,
                 ANIMAL_FATHER_NAME_TEST,
                 ANIMAL_MOTHER_NAME,
-                ANIMAL_ETHINICITY_TEST,
+                ANIMAL_ETHNICITY_TEST,
                 ANIMAL_WEIGHT_TEST,
                 ANIMAL_AGE_TEST,
                 ANIMAL_IMAGE_TEST);
 
         //Then the animals,
         verify(animalRepository).saveAnimal(any(Animal.class)); // is save on repository
-        verify(mAnimalDetailView).showAnimalsList(); // show animal list
+        verify(mAddAnimalView).showAnimalsList(); // show animal list
     }
 
     @Test
-    public void saveAnimalWithoutRegisterNumber_emptyAnimalShowUiError(){
+    public void saveAnimalWithoutRegisterNumber_showInvalidAnimalUiError(){
 
-        //When the presenter is asked to save a animal without register number
-        mAnimalDetailPresenter.saveAnimal(ANIMAL_NAME_TEST,
+        Animal animal = new Animal(ANIMAL_NAME_TEST,
                 "",
                 ANIMAL_BIRTH_DATE_TEST,
                 ANIMAL_RACE_TEST,
                 ANIMAL_COAT_NAME_TEST,
                 ANIMAL_FATHER_NAME_TEST,
                 ANIMAL_MOTHER_NAME,
-                ANIMAL_ETHINICITY_TEST,
+                ANIMAL_ETHNICITY_TEST,
                 ANIMAL_WEIGHT_TEST,
                 ANIMAL_AGE_TEST,
                 ANIMAL_IMAGE_TEST);
 
+        when(mAddAnimalView.getAnimal()).thenReturn(animal);
+        Animal animalToBeSaved = mAddAnimalView.getAnimal();
+
+        //When the presenter is asked to save a animal without register number
+        mAddAnimalPresenter.saveAnimal(animalToBeSaved);
+
         //Then show animal empty error message.
-        verify(mAnimalDetailView).showEmptyAnimalMessage();
+        verify(mAddAnimalView).showInvalidAnimalMessage();
     }
 
     @Test
     public void takePicture_createFileAndOpenCamera() throws IOException {
 
-        mAnimalDetailPresenter.takePicture();
+        mAddAnimalPresenter.takePicture();
 
         verify(mImageFile).create(anyString(), anyString());
         verify(mImageFile).getPath();
-        verify(mAnimalDetailView).openCamera(anyString());
+        verify(mAddAnimalView).openCamera(anyString());
     }
 
+    @Test
+    public void saveEmptyAnimal_showEmptyAnimalUiError(){
+
+        when(mAddAnimalView.getAnimal()).thenReturn(new Animal());
+        Animal animalToBeSaved = mAddAnimalView.getAnimal();
+
+        mAddAnimalPresenter.saveAnimal(animalToBeSaved);
+
+        verify(mAddAnimalView).showEmptyAnimalMessage();
+    }
 }

@@ -7,14 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.origin.ueliton.bulltrail.Animals.AnimalsContract;
-import com.origin.ueliton.bulltrail.Injection;
 import com.origin.ueliton.bulltrail.R;
 import com.origin.ueliton.bulltrail.model.Animal;
 import com.origin.ueliton.bulltrail.util.Constants;
 
 import java.util.Date;
-import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -28,9 +25,9 @@ public class AnimalDetailFragment extends Fragment implements AnimalDetailContra
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mAnimalDetailPresenter = new AnimalDetailPresenter(Injection.provideAnimalRepository(),
-                this,
-                Injection.providesImageFile());
+//        mAnimalDetailPresenter = new AnimalDetailPresenter(Injection.provideAnimalRepository(),
+//                this,
+//                Injection.providesImageFile());
     }
 
     @Nullable
@@ -134,6 +131,16 @@ public class AnimalDetailFragment extends Fragment implements AnimalDetailContra
 
     @Override
     public void openCamera(String imagePath) {
+
+    }
+
+    @Override
+    public Animal getAnimal() {
+        return null;
+    }
+
+    @Override
+    public void showInvalidAnimalMessage() {
 
     }
 }

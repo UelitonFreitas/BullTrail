@@ -60,7 +60,7 @@ public class Animal{
                   @Nullable Integer age,
                   @Nullable String imagePath) {
 
-        this.id = Long.valueOf(UUID.randomUUID().toString());
+//        this.id = Long.valueOf(UUID.randomUUID().toString());
         this.name = name;
         this.registerNumber = registerNumber;
         this.birthDate = birthDate;
@@ -72,6 +72,10 @@ public class Animal{
         this.weight = weight;
         this.age = age;
         this.imagePath = imagePath;
+    }
+
+    public Animal() {
+
     }
 
     public Long getId() {
@@ -162,8 +166,8 @@ public class Animal{
         return age;
     }
 
-    public boolean isEmpty() {
-        return StringUtil.isEmpty(registerNumber);
+    public boolean isValid() {
+        return !StringUtil.isEmpty(registerNumber);
     }
 
     @Override
@@ -205,5 +209,9 @@ public class Animal{
                 weight,
                 imagePath,
                 age);
+    }
+
+    public boolean isEmpty() {
+        return StringUtil.isEmpty(getRegisterNumber()) && (getAge() == null || getAge() == 0);
     }
 }
