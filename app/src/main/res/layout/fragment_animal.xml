@@ -39,7 +39,7 @@
 
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/float_action_button_save"
+        android:id="@+id/float_action_button_take_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_anchor="@id/app_bar_layout"
@@ -48,6 +48,7 @@
         android:src="@drawable/ic_photo_camera_white_36dp"/>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view_animal_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/activity_vertical_margin"
@@ -78,6 +79,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/edit_text_animal_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/name"
@@ -89,6 +91,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/edit_text_animal_birth_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/birthDate"
@@ -100,6 +103,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/edit_text_race"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/race"
@@ -111,6 +115,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/edit_text_animal_coat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/coat"
@@ -122,6 +127,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/edit_text_animal_father_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/fatherName"
@@ -133,6 +139,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/edit_text_animal_mother_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/motherName"
@@ -144,6 +151,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/edit_text_animal_race"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/ethnicity"
@@ -155,11 +163,18 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/edit_text_animal_weight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/weight"
                     tools:text="154 kg" />
             </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/button_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SALVAR"/>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

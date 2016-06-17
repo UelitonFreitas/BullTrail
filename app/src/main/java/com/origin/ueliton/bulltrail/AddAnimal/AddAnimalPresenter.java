@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import com.origin.ueliton.bulltrail.data.AnimalRepository;
 import com.origin.ueliton.bulltrail.model.Animal;
 import com.origin.ueliton.bulltrail.util.ImageFile;
-import com.origin.ueliton.bulltrail.util.StringUtil;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -16,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Created by ueliton on 14/06/16.
  */
-public class AddAnimalPresenter {
+public class AddAnimalPresenter implements AddAnimalContract.UserActionsListener{
     private final AnimalRepository mAnimalRepository;
     private final AddAnimalContract.View mAddAnimalView;
     private final ImageFile mImageFile;
@@ -33,39 +32,6 @@ public class AddAnimalPresenter {
         mAddAnimalView = addAnimalView;
         mImageFile = imageFile;
 
-    }
-
-    public void saveAnimal(String animalName,
-                           String animalRegisterNumber,
-                           Date animalBirthDate,
-                           String animalRace,
-                           String animalCoatName,
-                           String animalFatherName,
-                           String animalMotherName,
-                           String animalEthinicity,
-                           Integer animalWeight,
-                           Integer animalAge,
-                           String animalImage) {
-
-        if (StringUtil.isEmpty(animalRegisterNumber)) {
-            mAddAnimalView.showEmptyAnimalMessage();
-        } else {
-            Animal animal = new Animal(animalName,
-                    animalRegisterNumber,
-                    animalBirthDate,
-                    animalRace,
-                    animalCoatName,
-                    animalFatherName,
-                    animalMotherName,
-                    animalEthinicity,
-                    animalWeight,
-                    animalAge,
-                    animalImage);
-
-            mAnimalRepository.saveAnimal(animal);
-
-            mAddAnimalView.showAnimalsList();
-        }
     }
 
     public void takePicture() throws IOException {

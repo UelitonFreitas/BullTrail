@@ -4,6 +4,7 @@ import com.origin.ueliton.bulltrail.data.AnimalRepository;
 import com.origin.ueliton.bulltrail.data.AnimalsRepository;
 import com.origin.ueliton.bulltrail.data.AnimalsServiceApiImpl;
 import com.origin.ueliton.bulltrail.util.ImageFile;
+import com.origin.ueliton.bulltrail.util.ImageFileImpl;
 
 /**
  * Injeção das implementações de produção.
@@ -15,6 +16,6 @@ public class Injection {
     }
 
     public static ImageFile providesImageFile() {
-        return null;
+        return new ImageFileImpl();
     }
 }

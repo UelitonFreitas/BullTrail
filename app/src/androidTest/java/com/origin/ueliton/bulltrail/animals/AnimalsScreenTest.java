@@ -1,11 +1,18 @@
 package com.origin.ueliton.bulltrail.animals;
 
+import android.support.test.espresso.UiController;
+import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
 
 import com.origin.ueliton.bulltrail.Animals.AnimalsActivity;
 import com.origin.ueliton.bulltrail.R;
@@ -27,10 +34,12 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.google.common.base.Preconditions.checkArgument;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anyOf;
 
 /**
  * Created by ueliton on 5/31/16.
@@ -52,8 +61,8 @@ public class AnimalsScreenTest {
 
     /**
      * A custom {@link Matcher} which matches an item in a {@link RecyclerView} by its text.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * View constraints:
      * <ul>
      * <li>View must be a child of a {@link RecyclerView}
@@ -79,6 +88,26 @@ public class AnimalsScreenTest {
         };
     }
 
+    public static ViewAction betterScrollTo() {
+        return ViewActions.actionWithAssertions(new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), isDescendantOfA(anyOf(
+                        isAssignableFrom(ScrollView.class), isAssignableFrom(HorizontalScrollView.class), isAssignableFrom(NestedScrollView.class))));
+            }
+
+            @Override
+            public String getDescription() {
+                return "blabla";
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+
+            }
+        });
+    }
+
     @Test
     public void clickAddAnimalButton_opensAnimalUi() throws Exception {
 
@@ -91,7 +120,7 @@ public class AnimalsScreenTest {
     }
 
     @Test
-    public void addAnimalToAnimalsList(){
+    public void addAnimalToAnimalsList() {
 
         String newAnimalRegisterNumber = "0000";
 
@@ -100,7 +129,8 @@ public class AnimalsScreenTest {
         onView(withId(R.id.edit_text_register_number)).perform(typeText(newAnimalRegisterNumber),
                 closeSoftKeyboard());
 
-        onView(withId(R.id.float_action_button_save)).perform(click());
+        onView(withId(R.id.nested_scroll_view_animal_content)).perform(betterScrollTo());
+        onView(withId(R.id.button_save)).perform(click());
 
         onView(withId(R.id.recycler_view_pasture)).perform(
                 scrollTo(hasDescendant(withText(newAnimalRegisterNumber))));

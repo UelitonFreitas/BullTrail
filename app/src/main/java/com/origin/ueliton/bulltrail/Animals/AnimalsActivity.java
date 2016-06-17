@@ -1,5 +1,7 @@
 package com.origin.ueliton.bulltrail.Animals;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.VisibleForTesting;
 import android.support.test.espresso.IdlingResource;
 import android.support.v4.app.Fragment;
@@ -17,5 +19,9 @@ public class AnimalsActivity extends SingleFragmentActivity {
     @VisibleForTesting
     public IdlingResource getCountingIdlingResource() {
         return EspressoIdlingResource.getIdlingResource();
+    }
+
+    public static Intent getIntent(Context context){
+        return new Intent(context, AnimalsActivity.class);
     }
 }

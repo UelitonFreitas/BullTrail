@@ -13,4 +13,8 @@ public class DateUtil {
     public static Integer getAge(Date animalBirthDateTest) {
         return 0;
     }
+
+    public static Date stringToDate(String string) {
+        return new Date();
+    }
 }

@@ -63,8 +63,7 @@ public class AddAnimalPresenterTest {
     @Test
     public void saveAnimal_showSuccessOnUI(){
 
-        //When the presenter is asked to save a animal
-        mAddAnimalPresenter.saveAnimal(ANIMAL_NAME_TEST,
+        Animal animalToBeSaved = new Animal(ANIMAL_NAME_TEST,
                 ANIMAL_REGISTER_NUMBER_TEST,
                 ANIMAL_BIRTH_DATE_TEST,
                 ANIMAL_RACE_TEST,
@@ -75,6 +74,9 @@ public class AddAnimalPresenterTest {
                 ANIMAL_WEIGHT_TEST,
                 ANIMAL_AGE_TEST,
                 ANIMAL_IMAGE_TEST);
+
+        //When the presenter is asked to save a animal
+        mAddAnimalPresenter.saveAnimal(animalToBeSaved);
 
         //Then the animals,
         verify(animalRepository).saveAnimal(any(Animal.class)); // is save on repository
