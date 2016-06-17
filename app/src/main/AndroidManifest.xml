@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AnimalDetail.AnimalDetailActivity" />
+        <activity android:name=".AddAnimal.AddAnimalActivity" />
         <activity
             android:name=".activity.ModelActivity"
             android:label="@string/title_activity_model"

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.origin.ueliton.bulltrail.AddAnimal.AddAnimalActivity;
 import com.origin.ueliton.bulltrail.R;
 import com.origin.ueliton.bulltrail.AnimalDetail.AnimalDetailActivity;
 import com.origin.ueliton.bulltrail.adapter.AnimalAdapter;
@@ -49,7 +50,7 @@ public class AnimalsFragment extends Fragment implements AnimalListOperation {
 
     @OnClick(R.id.float_action_button_new)
     public void newAnimal(){
-        startActivity(AnimalDetailActivity.getIntent(getContext()));
+        startActivity(AddAnimalActivity.getIntent(getContext()));
     }
 
     @Override
