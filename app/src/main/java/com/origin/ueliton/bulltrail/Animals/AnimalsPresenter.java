@@ -26,7 +26,7 @@ public class AnimalsPresenter implements AnimalsContract.UserActionsListener{
 
     @Override
     public void addAnimal() {
-        mAnimalsView.showAddAnimal();
+        mAnimalsView.addAnimal();
     }
 
     @Override
@@ -46,5 +46,10 @@ public class AnimalsPresenter implements AnimalsContract.UserActionsListener{
         });
     }
 
+    @Override
+    public void showAnimalDetail(@NonNull Animal animal) {
+        checkNotNull(animal);
+        mAnimalsView.showAnimalDetail(animal.getId());
+    }
 
 }

@@ -11,7 +11,7 @@ public class AnimalsRepository {
 
     private static AnimalRepository repository;
 
-    public static AnimalRepository getInMemoryRepositoryInstance(@NonNull AnimalsServiceApi animalsServiceApi) {
+    public static AnimalRepository  getInMemoryRepositoryInstance(@NonNull AnimalsServiceApi animalsServiceApi) {
         checkNotNull(animalsServiceApi);
 
         if(repository == null){

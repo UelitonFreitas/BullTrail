@@ -11,11 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.origin.ueliton.bulltrail.AddAnimal.AddAnimalActivity;
+import com.origin.ueliton.bulltrail.Injection;
 import com.origin.ueliton.bulltrail.R;
 import com.origin.ueliton.bulltrail.AnimalDetail.AnimalDetailActivity;
 import com.origin.ueliton.bulltrail.adapter.AnimalAdapter;
 import com.origin.ueliton.bulltrail.interfaces.AnimalListOperation;
 import com.origin.ueliton.bulltrail.model.Animal;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,7 +27,7 @@ import butterknife.OnClick;
 /**
  * Created by ueliton on 28/03/2016.
  */
-public class AnimalsFragment extends Fragment implements AnimalListOperation {
+public class AnimalsFragment extends Fragment implements AnimalsContract.View, AnimalListOperation {
 
     @Bind(R.id.recycler_view_pasture)
     RecyclerView pastureList;
@@ -34,9 +37,13 @@ public class AnimalsFragment extends Fragment implements AnimalListOperation {
 
     private AnimalAdapter animalAdapter;
 
+    private AnimalsPresenter userActionsListener;
+
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        userActionsListener = new AnimalsPresenter(Injection.provideAnimalRepository(), this);
     }
 
     @Nullable
@@ -49,30 +56,50 @@ public class AnimalsFragment extends Fragment implements AnimalListOperation {
     }
 
     @OnClick(R.id.float_action_button_new)
-    public void newAnimal(){
+    public void newAnimal() {
         startActivity(AddAnimalActivity.getIntent(getContext()));
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        if(animalAdapter == null){
-            setUpPastureAdapter();
-        }
-        else {
-            animalAdapter.notifyDataSetChanged();
-        }
+        userActionsListener.loadAnimals();
     }
 
-    private void setUpPastureAdapter() {
-        animalAdapter = new AnimalAdapter(getContext(), this);
-        pastureList.setLayoutManager(new LinearLayoutManager(getContext()));
-        pastureList.setAdapter(animalAdapter);
+    private void setUpPastureAdapter(List<Animal> animals) {
+        if (animalAdapter == null) {
+            animalAdapter = new AnimalAdapter(getContext(), this, animals);
+            pastureList.setLayoutManager(new LinearLayoutManager(getContext()));
+            pastureList.setAdapter(animalAdapter);
+        }
+        else {
+            animalAdapter.addAnimals(animals);
+            animalAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void click(Animal animal, int position) {
         startActivity(AnimalDetailActivity.getIntent(getContext(), animal));
+    }
+
+    @Override
+    public void addAnimal() {
+        startActivity(AddAnimalActivity.getIntent(getContext()));
+    }
+
+    @Override
+    public void showAnimalDetail(Long animalId) {
+
+    }
+
+    @Override
+    public void showAnimals(List<Animal> animals) {
+        setUpPastureAdapter(animals);
+    }
+
+    @Override
+    public void setProgressIndicator(boolean active) {
+
     }
 }

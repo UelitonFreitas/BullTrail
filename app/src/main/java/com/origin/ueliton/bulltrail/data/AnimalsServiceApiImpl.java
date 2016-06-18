@@ -21,14 +21,16 @@ public class AnimalsServiceApiImpl implements AnimalsServiceApi {
     @Override
     public void getAnimals(final LoadAnimalsCallBack loadAnimalsCallBack) {
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                List<Animal> animals = new ArrayList<>(ANIMALS_SERVICE_DATA.values());
-                loadAnimalsCallBack.onAnimalsLoaded(animals);
-            }
-        }, SERVICE_LATENCY_IN_MILLIS);
+        List<Animal> animals = new ArrayList<>(ANIMALS_SERVICE_DATA.values());
+        loadAnimalsCallBack.onAnimalsLoaded(animals);
+        //Latencia
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        }, SERVICE_LATENCY_IN_MILLIS);
     }
 
     @Override

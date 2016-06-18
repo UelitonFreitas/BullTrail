@@ -13,6 +13,7 @@ import com.origin.ueliton.bulltrail.Injection;
 import com.origin.ueliton.bulltrail.R;
 import com.origin.ueliton.bulltrail.model.Animal;
 import com.origin.ueliton.bulltrail.util.DateUtil;
+import com.origin.ueliton.bulltrail.util.StringUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -102,7 +103,10 @@ public class AddAnimalFragment extends Fragment implements AddAnimalContract.Vie
         animal.setCoat(coat.getText().toString().trim());
         animal.setFather(fatherName.getText().toString().trim());
         animal.setMother(motherName.getText().toString().trim());
-        animal.setWeight(Integer.valueOf(weigth.getText().toString().trim()));
+
+        String animalWeigh = StringUtil.isEmpty(weigth.getText().toString().trim())? "0" : weigth.getText().toString().trim();
+
+        animal.setWeight(Integer.valueOf(animalWeigh));
 
         return animal;
     }

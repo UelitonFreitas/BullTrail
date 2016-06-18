@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Date;
 import java.util.List;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -75,8 +76,8 @@ public class AnimalsPresenterTest {
     public void clickOnAnimal_showAnimalUI(){
         Animal animal = new Animal("0000-0000", "Fantasma", new Date(), "Canino", "asd", "Lobo", "Loba", "Albino", 4547, 2, "image_path");
 
-        mAnimalsView.showAnimalDetail(animal);
+        mAnimalsPresenter.showAnimalDetail(animal);
 
-        verify(mAnimalsView).showAnimalDetail(animal);
+        verify(mAnimalsView).showAnimalDetail(any(Long.class));
     }
 }
