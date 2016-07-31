@@ -22,7 +22,9 @@ public class AnimalMigration extends Migration {
                         Attribute.MOTHER+" TEXT,"+
                         Attribute.ETHNICITY+" TEXT,"+
                         Attribute.WEIGHT+" INTEGER,"+
-                        Attribute.BIRTH_DATE+" INTEGER"+
+                        Attribute.BIRTH_DATE+" INTEGER,"+
+                        Attribute.IMAGE_PATH+" TEXT,"+
+                        Attribute.AGE+" INTEGER"+
                         ")"
         );
     }
@@ -40,5 +42,7 @@ public class AnimalMigration extends Migration {
         public static final String MOTHER = "mother";
         public static final String ETHNICITY = "ethnicity";
         public static final String WEIGHT = "weight";
+        public static final String IMAGE_PATH = "image_path";
+        public static final String AGE = "age";
     }
 }

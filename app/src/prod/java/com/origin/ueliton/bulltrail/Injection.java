@@ -1,6 +1,7 @@
 package com.origin.ueliton.bulltrail;
 
 import com.origin.ueliton.bulltrail.data.AnimalRepository;
+import com.origin.ueliton.bulltrail.data.AnimalRepositoryImpl;
 import com.origin.ueliton.bulltrail.data.AnimalsRepository;
 import com.origin.ueliton.bulltrail.data.AnimalsServiceApiImpl;
 import com.origin.ueliton.bulltrail.util.ImageFile;
@@ -12,7 +13,8 @@ import com.origin.ueliton.bulltrail.util.ImageFileImpl;
 public class Injection {
 
     public static AnimalRepository provideAnimalRepository() {
-        return AnimalsRepository.getInMemoryRepositoryInstance(new AnimalsServiceApiImpl());
+        return new AnimalRepositoryImpl();
+        //return AnimalsRepository.getInMemoryRepositoryInstance(new AnimalsServiceApiImpl());
     }
 
     public static ImageFile providesImageFile() {

@@ -59,7 +59,6 @@ public class AddAnimalFragment extends Fragment implements AddAnimalContract.Vie
                 Injection.providesImageFile());
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_animal, container, false);

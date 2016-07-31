@@ -3,48 +3,63 @@ package com.origin.ueliton.bulltrail.model;
 import android.support.annotation.Nullable;
 
 import com.google.common.base.Objects;
+import com.origin.ueliton.bulltrail.data.AnimalRepository;
+import com.origin.ueliton.bulltrail.migrations.AnimalMigration;
 import com.origin.ueliton.bulltrail.util.StringUtil;
 
 import java.util.Date;
 import java.util.UUID;
 
+import se.emilsjolander.sprinkles.Model;
+import se.emilsjolander.sprinkles.Query;
+import se.emilsjolander.sprinkles.annotations.AutoIncrement;
+import se.emilsjolander.sprinkles.annotations.Column;
+import se.emilsjolander.sprinkles.annotations.Key;
+import se.emilsjolander.sprinkles.annotations.Table;
+
 /**
  * Created by ueliton on 02/04/16.
  */
 
-public class Animal{
+@Table(AnimalMigration.Attribute.TABLE_NAME)
+public class Animal extends Model {
 
-    public Long id;
+    @Key
+    @AutoIncrement
+    @Column(AnimalMigration.Attribute.ID)
+    public Long id = 0L;
 
+    @Column(AnimalMigration.Attribute.REGISTER)
     public String registerNumber;
 
-    @Nullable
+    @Column(AnimalMigration.Attribute.NAME)
     public String name;
 
-    @Nullable
+    @Column(AnimalMigration.Attribute.BIRTH_DATE)
     public Date birthDate;
 
-    @Nullable
+    @Column(AnimalMigration.Attribute.RACE)
     public String race;
 
-    @Nullable
+    @Column(AnimalMigration.Attribute.COAT)
     public String coat;
 
-    @Nullable
+    @Column(AnimalMigration.Attribute.FATHER)
     public String father;
 
-    @Nullable
+    @Column(AnimalMigration.Attribute.MOTHER)
     public String mother;
 
-    @Nullable
+    @Column(AnimalMigration.Attribute.ETHNICITY)
     public String ethnicity;
 
-    @Nullable
+    @Column(AnimalMigration.Attribute.WEIGHT)
     public Integer weight;
 
-    @Nullable
+    @Column(AnimalMigration.Attribute.IMAGE_PATH)
     private String imagePath;
 
+    @Column(AnimalMigration.Attribute.AGE)
     @Nullable
     private Integer age;
 
@@ -166,10 +181,6 @@ public class Animal{
         return age;
     }
 
-    public boolean isValid() {
-        return !StringUtil.isEmpty(registerNumber);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -211,7 +222,7 @@ public class Animal{
                 age);
     }
 
-    public boolean isEmpty() {
-        return StringUtil.isEmpty(getRegisterNumber()) && (getAge() == null || getAge() == 0);
+    public static void findAnimals(AnimalRepository.LoadAnimalsCallBack loadAnimalCallBack) {
+        loadAnimalCallBack.onAnimalsLoaded(Query.all(Animal.class).get().asList());
     }
 }

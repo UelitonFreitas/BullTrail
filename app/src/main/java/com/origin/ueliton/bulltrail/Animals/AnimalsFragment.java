@@ -102,4 +102,9 @@ public class AnimalsFragment extends Fragment implements AnimalsContract.View, A
     public void setProgressIndicator(boolean active) {
 
     }
+
+    @Override
+    public void showAddAnimal() {
+
+    }
 }

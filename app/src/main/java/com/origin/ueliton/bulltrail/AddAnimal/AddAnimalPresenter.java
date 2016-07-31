@@ -3,8 +3,10 @@ package com.origin.ueliton.bulltrail.AddAnimal;
 import android.support.annotation.NonNull;
 
 import com.origin.ueliton.bulltrail.data.AnimalRepository;
+import com.origin.ueliton.bulltrail.exceptions.EmptyFieldException;
 import com.origin.ueliton.bulltrail.model.Animal;
 import com.origin.ueliton.bulltrail.util.ImageFile;
+import com.origin.ueliton.bulltrail.util.Validate;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -42,21 +44,29 @@ public class AddAnimalPresenter implements AddAnimalContract.UserActionsListener
         mAddAnimalView.openCamera(mImageFile.getPath());
     }
 
+    @Override
     public void saveAnimal(Animal animalToBeSaved) {
 
-        if (animalToBeSaved.isEmpty()) {
-            mAddAnimalView.showEmptyAnimalMessage();
-            return;
+        try {
+            validateFields(animalToBeSaved);
+        } catch (EmptyFieldException e) {
+            e.printStackTrace();
+            mAddAnimalView.showInvalidAnimalMessage();
         }
 
-        if (!animalToBeSaved.isValid()) {
-            mAddAnimalView.showInvalidAnimalMessage();
-            return;
-        }
+//        if (animalToBeSaved.isEmpty()) {
+//            mAddAnimalView.showEmptyAnimalMessage();
+//            return;
+//        }
+
 
         mAnimalRepository.saveAnimal(animalToBeSaved);
         mAddAnimalView.showAnimalsList();
+    }
 
+    private void validateFields(Animal animalToBeSaved) throws EmptyFieldException {
 
+        Validate.validateEmptyField(animalToBeSaved.getRegisterNumber());
+        Validate.validateEmptyField(animalToBeSaved.getName());
     }
 }

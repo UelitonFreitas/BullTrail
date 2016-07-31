@@ -3,9 +3,11 @@ package com.origin.ueliton.bulltrail.AnimalDetail;
 import android.support.annotation.NonNull;
 
 import com.origin.ueliton.bulltrail.data.AnimalRepository;
+import com.origin.ueliton.bulltrail.exceptions.EmptyFieldException;
 import com.origin.ueliton.bulltrail.model.Animal;
 import com.origin.ueliton.bulltrail.util.ImageFile;
 import com.origin.ueliton.bulltrail.util.StringUtil;
+import com.origin.ueliton.bulltrail.util.Validate;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -32,12 +34,12 @@ public class AnimalDetailPresenter implements AnimalDetailContract.UserActionsLi
 
         mAnimalDetailView.setProgressIndicator(true);
 
-        mAnimalDetailRepository.getAnimal(animalId, new AnimalRepository.LoadAnimalCallBack(){
+        mAnimalDetailRepository.getAnimal(animalId, new AnimalRepository.LoadAnimalCallBack() {
             @Override
             public void onAnimalLoaded(Animal animal) {
 
                 mAnimalDetailView.setProgressIndicator(false);
-                if(animal == null)
+                if (animal == null)
                     mAnimalDetailView.showAnimalNotFoundView();
                 else {
                     showAnimal(animal);
@@ -49,13 +51,22 @@ public class AnimalDetailPresenter implements AnimalDetailContract.UserActionsLi
     @Override
     public void saveAnimal(Animal animal) {
 
-        if(!animal.isValid()){
+        try {
+            validateFields(animal);
+        } catch (EmptyFieldException e) {
+            e.printStackTrace();
             mAnimalDetailView.showInvalidAnimalMessage();
         }
-        else {
-            mAnimalDetailRepository.saveAnimal(animal);
-            mAnimalDetailView.showAnimalsList();
-        }
+
+        mAnimalDetailRepository.saveAnimal(animal);
+        mAnimalDetailView.showAnimalsList();
+
+    }
+
+    private void validateFields(Animal animalToBeSaved) throws EmptyFieldException {
+
+        Validate.validateEmptyField(animalToBeSaved.getRegisterNumber());
+        Validate.validateEmptyField(animalToBeSaved.getName());
     }
 
     private void showAnimal(Animal animal) {
@@ -80,10 +91,9 @@ public class AnimalDetailPresenter implements AnimalDetailContract.UserActionsLi
 
         mAnimalDetailView.showAnimalAge(animal.getAge());
 
-        if(StringUtil.isEmpty(animal.getImagePath())){
+        if (StringUtil.isEmpty(animal.getImagePath())) {
             mAnimalDetailView.showEmptyImage();
-        }
-        else {
+        } else {
             mAnimalDetailView.showAnimalImage(animal.getImagePath());
         }
     }

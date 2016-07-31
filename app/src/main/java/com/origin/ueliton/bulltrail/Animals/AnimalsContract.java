@@ -21,5 +21,6 @@ public interface AnimalsContract {
         void showAnimalDetail(Long animalId);
         void showAnimals(List<Animal> animals);
         void setProgressIndicator(boolean active);
+        void showAddAnimal();
     }
 }
