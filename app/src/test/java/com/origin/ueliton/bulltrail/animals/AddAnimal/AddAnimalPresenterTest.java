@@ -18,6 +18,8 @@ import java.util.Date;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -37,6 +39,7 @@ public class AddAnimalPresenterTest {
     private static final Integer ANIMAL_WEIGHT_TEST = 4547;
     private static final String ANIMAL_IMAGE_TEST = "path_to_a_image";
     private static final Integer ANIMAL_AGE_TEST = 2;
+    private static final String EMPTY_STRING = "";
 
     private AddAnimalPresenter mAddAnimalPresenter;
 
@@ -75,19 +78,21 @@ public class AddAnimalPresenterTest {
                 ANIMAL_AGE_TEST,
                 ANIMAL_IMAGE_TEST);
 
+        when(mAddAnimalView.getAnimal()).thenReturn(animalToBeSaved);
+
         //When the presenter is asked to save a animal
-        mAddAnimalPresenter.saveAnimal(animalToBeSaved);
+        mAddAnimalPresenter.onSaveAnimal();
 
         //Then the animals,
-        verify(animalRepository).saveAnimal(any(Animal.class)); // is save on repository
+        verify(animalRepository).saveAnimal(eq(animalToBeSaved)); // is save on repository
         verify(mAddAnimalView).showAnimalsList(); // show animal list
     }
 
     @Test
-    public void saveAnimalWithoutRegisterNumber_showInvalidAnimalUiError(){
+    public void saveAnimalWithoutRegisterNumber_showEmptyRegisterNumberAnimalUiError(){
 
         Animal animal = new Animal(ANIMAL_NAME_TEST,
-                "",
+                EMPTY_STRING,
                 ANIMAL_BIRTH_DATE_TEST,
                 ANIMAL_RACE_TEST,
                 ANIMAL_COAT_NAME_TEST,
@@ -99,19 +104,47 @@ public class AddAnimalPresenterTest {
                 ANIMAL_IMAGE_TEST);
 
         when(mAddAnimalView.getAnimal()).thenReturn(animal);
-        Animal animalToBeSaved = mAddAnimalView.getAnimal();
 
         //When the presenter is asked to save a animal without register number
-        mAddAnimalPresenter.saveAnimal(animalToBeSaved);
+        mAddAnimalPresenter.onSaveAnimal();
 
         //Then show animal empty error message.
-        verify(mAddAnimalView).showInvalidAnimalMessage();
+        verify(mAddAnimalView).showEmptyRegisterAnimalMessage();
+
+        //Verifica se o animal realmente não foi salvo
+        verify(animalRepository, never()).saveAnimal(eq(animal));
+    }
+
+    @Test
+    public void saveAnimalWithoutName_showEmptyNameUiError(){
+
+        Animal animal = new Animal(EMPTY_STRING,
+                ANIMAL_REGISTER_NUMBER_TEST,
+                ANIMAL_BIRTH_DATE_TEST,
+                ANIMAL_RACE_TEST,
+                ANIMAL_COAT_NAME_TEST,
+                ANIMAL_FATHER_NAME_TEST,
+                ANIMAL_MOTHER_NAME,
+                ANIMAL_ETHNICITY_TEST,
+                ANIMAL_WEIGHT_TEST,
+                ANIMAL_AGE_TEST,
+                ANIMAL_IMAGE_TEST);
+
+        when(mAddAnimalView.getAnimal()).thenReturn(animal);
+
+        mAddAnimalPresenter.onSaveAnimal();
+
+        //Menssagem de erro foi mostrada
+        verify(mAddAnimalView).showEmptyNameMessage();
+
+        //Nenhum animal foi salvo
+        verify(animalRepository, never()).saveAnimal(any(Animal.class));
     }
 
     @Test
     public void takePicture_createFileAndOpenCamera() throws IOException {
 
-        mAddAnimalPresenter.takePicture();
+        mAddAnimalPresenter.onTakePicture();
 
         verify(mImageFile).create(anyString(), anyString());
         verify(mImageFile).getPath();
@@ -119,13 +152,20 @@ public class AddAnimalPresenterTest {
     }
 
     @Test
-    public void saveEmptyAnimal_showEmptyAnimalUiError(){
+    public void onDateClick_showDatePickerUI(){
 
-        when(mAddAnimalView.getAnimal()).thenReturn(new Animal());
-        Animal animalToBeSaved = mAddAnimalView.getAnimal();
+        mAddAnimalPresenter.onDateClick();
 
-        mAddAnimalPresenter.saveAnimal(animalToBeSaved);
+        verify(mAddAnimalView).showDatePicker();
+    }
 
-        verify(mAddAnimalView).showEmptyAnimalMessage();
+    @Test
+    public void onDateSelected_setDateOnUi(){
+
+        Date date = new Date();
+
+        mAddAnimalPresenter.onDateSelected(date);
+
+        verify(mAddAnimalView).setDate(eq(date));
     }
 }

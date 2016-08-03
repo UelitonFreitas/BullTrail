@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.origin.ueliton.bulltrail.data.AnimalRepository;
 import com.origin.ueliton.bulltrail.exceptions.EmptyFieldException;
+import com.origin.ueliton.bulltrail.exceptions.InvalidAnimalException;
 import com.origin.ueliton.bulltrail.model.Animal;
 import com.origin.ueliton.bulltrail.util.ImageFile;
 import com.origin.ueliton.bulltrail.util.Validate;
@@ -36,7 +37,7 @@ public class AddAnimalPresenter implements AddAnimalContract.UserActionsListener
 
     }
 
-    public void takePicture() throws IOException {
+    public void onTakePicture() throws IOException {
 
         String timeStamp = new SimpleDateFormat("yyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -45,28 +46,46 @@ public class AddAnimalPresenter implements AddAnimalContract.UserActionsListener
     }
 
     @Override
-    public void saveAnimal(Animal animalToBeSaved) {
+    public void onDateClick() {
+        mAddAnimalView.showDatePicker();
+    }
+
+    @Override
+    public void onDateSelected(Date date) {
+        mAddAnimalView.setDate(date);
+    }
+
+
+    @Override
+    public void onSaveAnimal() {
+
+        Animal animalToBeSaved = mAddAnimalView.getAnimal();
 
         try {
             validateFields(animalToBeSaved);
-        } catch (EmptyFieldException e) {
+            mAnimalRepository.saveAnimal(animalToBeSaved);
+            mAddAnimalView.showAnimalsList();
+        } catch (InvalidAnimalException e) {
             e.printStackTrace();
-            mAddAnimalView.showInvalidAnimalMessage();
         }
-
-//        if (animalToBeSaved.isEmpty()) {
-//            mAddAnimalView.showEmptyAnimalMessage();
-//            return;
-//        }
-
-
-        mAnimalRepository.saveAnimal(animalToBeSaved);
-        mAddAnimalView.showAnimalsList();
     }
 
-    private void validateFields(Animal animalToBeSaved) throws EmptyFieldException {
+    private void validateFields(Animal animalToBeSaved) throws InvalidAnimalException {
 
-        Validate.validateEmptyField(animalToBeSaved.getRegisterNumber());
-        Validate.validateEmptyField(animalToBeSaved.getName());
+        try {
+            Validate.validateEmptyField(animalToBeSaved.getRegisterNumber());
+        } catch (EmptyFieldException e) {
+            e.printStackTrace();
+            mAddAnimalView.showEmptyRegisterAnimalMessage();
+            throw new InvalidAnimalException();
+        }
+
+        try {
+            Validate.validateEmptyField(animalToBeSaved.getName());
+        } catch (EmptyFieldException e) {
+            e.printStackTrace();
+            mAddAnimalView.showEmptyNameMessage();
+            throw new InvalidAnimalException();
+        }
     }
 }

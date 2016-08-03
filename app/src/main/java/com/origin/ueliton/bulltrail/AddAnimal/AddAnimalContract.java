@@ -3,6 +3,7 @@ package com.origin.ueliton.bulltrail.AddAnimal;
 import com.origin.ueliton.bulltrail.model.Animal;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by ueliton on 14/06/16.
@@ -10,14 +11,29 @@ import java.io.IOException;
 public class AddAnimalContract {
     public interface View {
         void showAnimalsList();
-        void showEmptyAnimalMessage();
+
+        void showEmptyRegisterAnimalMessage();
+
         void openCamera(String imagePath);
+
         Animal getAnimal();
-        void showInvalidAnimalMessage();
+
+        void showInvalidRegisterNumberAnimalMessage();
+
+        void showEmptyNameMessage();
+
+        void showDatePicker();
+
+        void setDate(Date date);
     }
 
     public interface UserActionsListener {
-        void saveAnimal(Animal animalName);
-        void takePicture() throws IOException;
+        void onSaveAnimal();
+
+        void onTakePicture() throws IOException;
+
+        void onDateClick();
+
+        void onDateSelected(Date date);
     }
 }

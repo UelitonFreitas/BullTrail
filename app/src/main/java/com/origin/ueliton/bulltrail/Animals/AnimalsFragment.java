@@ -80,7 +80,7 @@ public class AnimalsFragment extends Fragment implements AnimalsContract.View, A
 
     @Override
     public void click(Animal animal, int position) {
-        startActivity(AnimalDetailActivity.getIntent(getContext(), animal));
+        userActionsListener.showAnimalDetail(animal);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class AnimalsFragment extends Fragment implements AnimalsContract.View, A
 
     @Override
     public void showAnimalDetail(Long animalId) {
-
+        startActivity(AnimalDetailActivity.getIntent(getContext(), animalId));
     }
 
     @Override

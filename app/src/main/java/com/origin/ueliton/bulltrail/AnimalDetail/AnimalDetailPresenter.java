@@ -53,13 +53,12 @@ public class AnimalDetailPresenter implements AnimalDetailContract.UserActionsLi
 
         try {
             validateFields(animal);
+            mAnimalDetailRepository.saveAnimal(animal);
+            mAnimalDetailView.showAnimalsList();
         } catch (EmptyFieldException e) {
             e.printStackTrace();
             mAnimalDetailView.showInvalidAnimalMessage();
         }
-
-        mAnimalDetailRepository.saveAnimal(animal);
-        mAnimalDetailView.showAnimalsList();
 
     }
 

@@ -18,6 +18,7 @@ import java.util.Date;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -124,5 +125,8 @@ public class AnimalDetailPresenterTest {
         mAnimalDetailPresenter.saveAnimal(animalToBeSaved);
 
         verify(mAnimalDetailView).showInvalidAnimalMessage();
+
+        //Verifica se o animal realmente não foi salvo
+        verify(mAnimalRepository, never()).saveAnimal(any(Animal.class));
     }
 }

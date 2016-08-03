@@ -13,7 +13,7 @@ public interface AnimalRepository {
     void getAnimal(Long animalId, LoadAnimalCallBack caploadAnimalCallBackture);
     void saveAnimal(Animal animal);
     void refreshData();
-
+    void findById(long animalId);
     interface LoadAnimalsCallBack {
         void onAnimalsLoaded(List<Animal> animals);
     }

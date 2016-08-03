@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
 
     <android.widget.ScrollView
         android:id="@+id/scroll_view_animal_content"
@@ -40,6 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/register"
+                    android:inputType="number"
                     tools:text="Registro" />
             </android.support.design.widget.TextInputLayout>
 
@@ -56,14 +56,17 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/text_input_animal_birth_date"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:focusable="false">
 
                 <EditText
                     android:id="@+id/edit_text_animal_birth_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/birthDate"
+                    android:focusable="false"
                     tools:text="01/12/2001" />
             </android.support.design.widget.TextInputLayout>
 
@@ -120,7 +123,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/edit_text_animal_race"
+                    android:id="@+id/edit_text_animal_ethnicity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/ethnicity"
@@ -136,6 +139,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/weight"
+                    android:inputType="number"
                     tools:text="154 kg" />
             </android.support.design.widget.TextInputLayout>
 

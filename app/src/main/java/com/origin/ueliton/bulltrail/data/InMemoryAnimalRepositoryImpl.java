@@ -69,4 +69,9 @@ public class InMemoryAnimalRepositoryImpl implements AnimalRepository{
         mCachedAnimals = null;
     }
 
+    @Override
+    public void findById(long animalId) {
+
+    }
+
 }

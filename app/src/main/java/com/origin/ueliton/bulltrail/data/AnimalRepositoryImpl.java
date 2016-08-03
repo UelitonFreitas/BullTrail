@@ -28,4 +28,9 @@ public class AnimalRepositoryImpl implements AnimalRepository {
 
     }
 
+    @Override
+    public void findById(long animalId) {
+
+    }
+
 }

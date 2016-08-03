@@ -15,7 +15,7 @@ public class AnimalDetailActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        long animalId = getIntent(this).getLongExtra(Constants.AnimalActivity.Extras.ANIMAL, -1);
+        long animalId = getIntent().getLongExtra(Constants.AnimalActivity.Extras.ANIMAL, -1);
         return AnimalDetailFragment.newInstance(animalId);
     }
 
@@ -25,7 +25,7 @@ public class AnimalDetailActivity extends SingleFragmentActivity {
         return intent;
     }
 
-    public static Intent getIntent(Context context) {
+    public static Intent getIntent(Context context, Long animalId) {
         Intent intent = new Intent(context, AnimalDetailActivity.class);
         return intent;
     }
